@@ -1,0 +1,17 @@
+:root {
+  --darkest: rgb(36, 37, 41);
+  --darker: rgb(40, 43, 54);
+  --dark: rgb(33, 37, 49);
+  --accent1: rgb(92, 150, 44);
+  --lightest: rgb(212, 219, 245);
+}
+
+html {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding:0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
