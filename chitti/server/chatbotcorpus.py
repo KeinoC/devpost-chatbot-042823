@@ -2,6 +2,8 @@ import numpy as np
 import nltk
 import string
 import random
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # this block of code will open the chatbot and allow it to read from any file input. Each word from the file is converted into tokens so that every string can be read
 #i dumped random data in the chatbot.txt as of 10:40pm 4/28, feel free to delete!
@@ -34,3 +36,21 @@ def greet(sentence):
         if word.lower() in greeting_inputs:
             return random.choice(greeting_responses)
         
+# this block of code is for the response that the chatbot can give if the user enters a phrase that the chatbot does not recognize
+def response(user_response):
+    robo1_repsonse = ' '
+    TfidfVec = TfidfVectorizer(tokenizer = LemNormailize, stop_words ='english')
+    tfidf = TfidfVec.fit_transform(sent_tokens)
+    values = cosine_similarity(tfidf[-1], tfidf)
+    idx = values.argsort()[0][-2]
+    flat = values.flatten()
+    flat.sort()
+    req_tfidf = flat[-2]
+    if(req_tfidf == 0):
+        robo1_response = robo1_response + "Sorry, I don't understand what you are saying."
+        return robo1_response
+    else:
+        robo1_response = robo1_response + sent_tokens[idx]
+        return robo1_response
+
+    
