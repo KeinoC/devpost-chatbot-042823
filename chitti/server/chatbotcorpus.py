@@ -28,3 +28,9 @@ def LemNormalize(text):
 # this block of code is for the greeting function
 greeting_inputs = ("hello", "hi", "hey", "what's up", "hey how's it going?", "what's poppin")
 greeting_responses = ["hello", "hi", "hey", "Hi there", "Welcome","Are you still here?"]
+def greet(sentence):
+    
+    for word in sentence.split():
+        if word.lower() in greeting_inputs:
+            return random.choice(greeting_responses)
+        
