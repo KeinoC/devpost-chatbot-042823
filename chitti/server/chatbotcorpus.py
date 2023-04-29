@@ -26,3 +26,5 @@ def LemNormalize(text):
     return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
 # this block of code is for the greeting function
+greeting_inputs = ("hello", "hi", "hey", "what's up", "hey how's it going?", "what's poppin")
+greeting_responses = ["hello", "hi", "hey", "Hi there", "Welcome","Are you still here?"]
