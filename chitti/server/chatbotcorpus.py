@@ -51,7 +51,7 @@ def greet(sentence):
             return random.choice(greeting_responses)
         
 # this block of code is for the response that the chatbot can give if the user enters a phrase that the chatbot does not recognize
-def response(user_response):
+def generate_bot_response(user_response):
     robo1_response = ' '
     TfidfVec = TfidfVectorizer(tokenizer = LemNormalize, stop_words ='english')
     tfidf = TfidfVec.fit_transform(sent_tokens)
@@ -85,7 +85,7 @@ while(flag == True):
                 word_tokens = word_tokens + nltk.word_tokenize(user_response)
                 final_words = list(set(word_tokens))
                 print("Bot: ", end = "")
-                print(response(user_response))
+                print(generate_bot_response(user_response))
                 sent_tokens.remove(user_response)
 
 else:
@@ -93,5 +93,3 @@ else:
     print("Goodbye and take care!")
     
     
-                
-                

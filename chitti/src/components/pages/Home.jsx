@@ -3,16 +3,16 @@ import "./Home.css";
 import "../../App.css";
 
 function Home() {
-    const URL = "localhost:5000/chitti/message";
+    const URL = "http://127.0.0.1:5000/user_messages";
 
-    const [input, setInput] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [input, setInput] = useState("");
+    const [response, setResponse] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [responseHistory, setResponseHistory] = useState([]);
     const [userName, setUserName] = useState("Katie");
 
-    console.log("input:", input)
-    console.log("input history:", chatHistory)
+    console.log("input:", input);
+    console.log("input history:", chatHistory);
 
     const handleInputChange = (event) => {
         setInput(event.target.value);
@@ -28,20 +28,37 @@ function Home() {
         setChatHistory((prevHistory) => [...prevHistory, input]);
 
         // Clear the input value
-        setInput('');
+        setInput("");
     };
 
     // need API endpoints established to request from backend
 
     const sendInput = async () => {
         await fetch(URL, {
-            method: "post",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(input),
+            body: JSON.stringify({ input: input }),
         });
     };
+
+    //send input v2
+    // const sendInput = () => {
+    //     fetch(URL, {
+    //         method: "post",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(input),
+    //     })
+    //     .then(response => {
+    //         console.log(response)
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //     });
+    // };
 
     const getResponse = async () => {
         const response = await fetch(URL);
@@ -66,9 +83,7 @@ function Home() {
         "Are you still here?",
     ];
 
-    const [currUserMsg, setCurrUserMsg] = useState("")
-
-
+    const [currUserMsg, setCurrUserMsg] = useState("");
 
     function greetingCheck(input) {
         const inputArray = input.split(" ");
@@ -83,71 +98,78 @@ function Home() {
     }
 
     function handleSend() {
-        const timeStamp = "placeholder date"
-        const newHistoryObj = {sender : userName, message : input}
-        setChatHistory((prevHistory) => [...prevHistory, newHistoryObj ])
+        const timeStamp = "placeholder date";
+        const newHistoryObj = { sender: userName, message: input };
+        setChatHistory((prevHistory) => [...prevHistory, newHistoryObj]);
     }
 
     function renderChatHistory() {
-        console.log(chatHistory)
+        console.log(chatHistory);
         chatHistory.map((chatObj) => {
             // const time = chatObj.time
-            const sender = chatObj.sender
-            const message = chatObj.message
+            const sender = chatObj.sender;
+            const message = chatObj.message;
 
-            console.log(sender, message)
+            console.log(sender, message);
 
             return (
-                <div className = "chat-instance">
+                <div className="chat-instance">
                     {sender}: {message}
                 </div>
-            )
-        })
+            );
+        });
     }
 
-    console.log(renderChatHistory())
-    console.log(input)
-    console.log(chatHistory)
+    console.log(renderChatHistory());
+    console.log(input);
+    console.log(chatHistory);
     //////////////////////////////////
 
     return (
         <div className="page home-page">
             <div className="head">
-            <div>
-            <li className="header">Welcome to Chitti </li>
-            <li className="tagline">The Ramen Expert</li>
-            </div>
-            <img className="panda" src="https://www.freepnglogos.com/uploads/panda-png/panda-clip-art-clkerm-vector-clip-art-online-27.png"></img>
-            </div>
-            
-            <div class="section">
-            <img className="ramen-img" src="https://img.freepik.com/premium-vector/hand-drawn-cute-ramen-noodle-illustration-design-vector_90573-539.jpg?w=2000"></img>
-            <div className="chat-container">
-                <div className="message-history-container">
-                    <ul>
-                        <li>Chatbot: Hi! Ask me anything about Ramen noodles</li>
-                        {chatHistory.map((input, index) => (
-                            <li key={index}>You: {input}</li>
-                            ))}
-                        
-                        <li>{response}</li>
-
-                        {/* commenting out the code below because i'm experimenting with a different data structure */}
-                        {/* {renderChatHistory()} */}
-
-
-                    </ul>
+                <div>
+                    <li className="header">Welcome to Chitti </li>
+                    <li className="tagline">The Ramen Expert</li>
                 </div>
-                <form onSubmit={handleSubmit} >
-                    <input
-                        value={input}
-                        className="new-message-window"
-                        onChange={handleInputChange}
-                    ></input>
-                    <button type="submit" className="buttons">Send</button>
-                </form>
+                <img
+                    className="panda"
+                    src="https://www.freepnglogos.com/uploads/panda-png/panda-clip-art-clkerm-vector-clip-art-online-27.png"
+                ></img>
             </div>
 
+            <div className="section">
+                <img
+                    className="ramen-img"
+                    src="https://img.freepik.com/premium-vector/hand-drawn-cute-ramen-noodle-illustration-design-vector_90573-539.jpg?w=2000"
+                ></img>
+                <div className="chat-container">
+                    <div className="message-history-container">
+                        <ul>
+                            <li>
+                                Chatbot: Hi! Ask me anything about Ramen noodles
+                            </li>
+                            {chatHistory.map((input, index) => (
+                                <li key={index}>You: {input}</li>
+                            ))}
+
+                            <li>{response}</li>
+
+                            {/* commenting out the code below because i'm experimenting with a different data structure */}
+                            {/* {renderChatHistory()} */}
+                        </ul>
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            value={input}
+                            className="new-message-window"
+                            onChange={handleInputChange}
+                        ></input>
+                        <button type="submit" className="buttons">
+                            Send
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
